@@ -1,0 +1,17 @@
+@use "./tailwind.css";
+@use "./font.scss";
+
+html {
+  scroll-behavior: smooth;
+  font-size: 1.112vw;
+
+  @media (max-width: 640px) {
+    font-size: 4.27vw;
+  }
+}
+
+body {
+  overflow-x: hidden;
+  font-family: "InterTight", sans-serif;
+  background-color: var(--color-bg);
+}
