@@ -8,7 +8,7 @@ COPY . .
 RUN npm run build
 
 WORKDIR /backend
-RUN git clone https://github.com/mursel05/FastChat-back.git .
+RUN git clone https://github.com/mursel05/Fistiq-backend.git .
 RUN npm install
 RUN npm run build
 
