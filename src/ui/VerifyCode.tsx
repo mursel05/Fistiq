@@ -1,11 +1,30 @@
 "use client";
+import { Spinner } from "@/components/ui/spinner";
+import { useVerifyCode } from "@/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useRef, SyntheticEvent } from "react";
 
 const VerifyCode = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
+  const { verifyCode, loading } = useVerifyCode();
+  const router = useRouter();
+
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    const { data } = await verifyCode({
+      variables: {
+        input: {
+          code: Number(code.join("")),
+        },
+      },
+    });
+    if (data?.verifyCode?.success) {
+      router.push("/reset-password?token=" + code.join(""));
+    }
+  };
 
   const handleChange = (index: number, value: string) => {
     if (!/^\d?$/.test(value)) return;
@@ -69,15 +88,16 @@ const VerifyCode = () => {
           ))}
         </div>
 
-        <Link
-          href="/reset-password"
-          className={`block w-full text-center rounded-lg py-3 text-sm font-medium transition-colors ${
+        <button
+          onClick={handleSubmit}
+          disabled={!isComplete || loading}
+          className={`flex justify-center w-full cursor-pointer text-center rounded-lg py-3 text-sm font-medium transition-colors ${
             isComplete
               ? "bg-zinc-900 text-white hover:bg-zinc-700"
               : "bg-zinc-200 text-zinc-400 cursor-not-allowed pointer-events-none"
           }`}>
-          Verify
-        </Link>
+          {loading ? <Spinner /> : "Verify"}
+        </button>
 
         <p className="text-center text-xs text-zinc-400 mt-6 flex items-center justify-center gap-1">
           Didn&apos;t receive it?

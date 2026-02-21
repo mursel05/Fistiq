@@ -1,11 +1,40 @@
 "use client";
+import { useLogin } from "@/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { SyntheticEvent, useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { login, loading } = useLogin();
+  const [formData, setFormData] = useState({
+    email: "johnmaq.doe@eqqqxample.com",
+    password: "SecurePass123!",
+  });
+  const router = useRouter();
+
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (loading) return;
+    if (!formData.email || !formData.password) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+
+    const { data } = await login({
+      variables: {
+        input: {
+          email: formData.email,
+          password: formData.password,
+        },
+      },
+    });
+    if (data?.login?.success) {
+      router.push("/");
+    }
+  };
 
   return (
     <main className="min-h-screen bg-[#F7F6F3] flex items-center justify-center px-4">
@@ -31,7 +60,7 @@ const Login = () => {
         </h1>
         <p className="text-sm text-zinc-400 mb-8">Sign in to your account</p>
 
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block text-xs font-medium text-zinc-500 mb-1.5 uppercase tracking-widest">
               Email
@@ -39,8 +68,10 @@ const Login = () => {
             <input
               type="email"
               name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               placeholder="you@example.com"
               className="w-full bg-white border border-zinc-200 rounded-lg px-4 py-3 text-sm text-zinc-900 placeholder-zinc-300 outline-none focus:border-zinc-400 transition-colors"
             />
@@ -53,8 +84,10 @@ const Login = () => {
             <input
               type="password"
               name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
               placeholder="••••••••"
               className="w-full bg-white border border-zinc-200 rounded-lg px-4 py-3 text-sm text-zinc-900 placeholder-zinc-300 outline-none focus:border-zinc-400 transition-colors"
             />
@@ -70,8 +103,9 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-zinc-900 cursor-pointer text-white rounded-lg py-3 text-sm font-medium hover:bg-zinc-700 transition-colors mt-2">
-            Sign in
+            disabled={loading}
+            className="w-full flex justify-center bg-zinc-900 cursor-pointer text-white rounded-lg py-3 text-sm font-medium hover:bg-zinc-700 transition-colors mt-2">
+            {loading ? <Spinner /> : "Sign In"}
           </button>
         </form>
 

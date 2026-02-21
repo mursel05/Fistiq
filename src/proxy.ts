@@ -15,7 +15,7 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
-  const refreshToken = request.cookies.get("refreshToken")?.value;
+  const refreshToken = request.cookies.get("refresh-token")?.value;
   const authRoutes = ["/my-videos"];
   if (
     !refreshToken &&

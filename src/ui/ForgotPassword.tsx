@@ -1,16 +1,28 @@
 "use client";
+import { Spinner } from "@/components/ui/spinner";
+import { useForgotPassword } from "@/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SyntheticEvent, useState } from "react";
 
 const ForgotPassword = () => {
+  const { forgotPassword, loading } = useForgotPassword();
   const [email, setEmail] = useState("");
   const router = useRouter();
 
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    router.push("/verify-code");
+    const { data } = await forgotPassword({
+      variables: {
+        input: {
+          email,
+        },
+      },
+    });
+    if (data?.forgotPassword?.success) {
+      router.push("/verify-code");
+    }
   };
 
   return (
@@ -47,6 +59,7 @@ const ForgotPassword = () => {
             <input
               type="email"
               value={email}
+              name="email"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               className="w-full bg-white border border-zinc-200 rounded-lg px-4 py-3 text-sm text-zinc-900 placeholder-zinc-300 outline-none focus:border-zinc-400 transition-colors"
@@ -55,8 +68,9 @@ const ForgotPassword = () => {
 
           <button
             type="submit"
-            className="w-full bg-zinc-900 cursor-pointer text-white rounded-lg py-3 text-sm font-medium hover:bg-zinc-700 transition-colors">
-            Send code
+            disabled={loading}
+            className="w-full flex justify-center bg-zinc-900 cursor-pointer text-white rounded-lg py-3 text-sm font-medium hover:bg-zinc-700 transition-colors">
+            {loading ? <Spinner /> : "Send code"}
           </button>
         </form>
 

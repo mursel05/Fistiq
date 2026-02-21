@@ -4,6 +4,7 @@ import { DataProvider } from "@/context/ApiContext";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import LenisProvider from "@/utils/lenis";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_CLIENT_URL as string),
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
     template: "%s | Fistiq",
     default: "Fistiq",
   },
-  description: "Fistiq is a platform for sharing and discovering high-quality videos across various topics. Join our community to explore, create, and connect with like-minded individuals.",
+  description:
+    "Fistiq is a platform for sharing and discovering high-quality videos across various topics. Join our community to explore, create, and connect with like-minded individuals.",
   keywords: [
     "Fistiq",
     "video sharing",
@@ -42,6 +44,7 @@ export default function RootLayout({
             <Footer />
           </DataProvider>
         </LenisProvider>
+        <Toaster position="top-center" />
       </body>
     </html>
   );
