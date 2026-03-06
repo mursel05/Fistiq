@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import "@/assets/styles/globals.scss";
-import { DataProvider } from "@/context/ApiContext";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import LenisProvider from "@/utils/lenis";
-import { Toaster } from "sonner";
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_CLIENT_URL as string),
@@ -34,17 +30,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head></head>
+    <html lang="en">
       <body>
-        <LenisProvider>
-          <DataProvider>
-            <Navbar />
-            {children}
-            <Footer />
-          </DataProvider>
-        </LenisProvider>
-        <Toaster position="top-center" />
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

@@ -16,7 +16,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#F7F6F3] flex items-center justify-center px-4">
+    <main className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="mb-10 flex items-center gap-2">
           <Image
@@ -26,7 +26,7 @@ const ResetPassword = () => {
             height={48}
           />
           <span
-            className="text-2xl font-semibold tracking-tight text-zinc-900"
+            className="text-2xl font-semibold tracking-tight text-white"
             style={{ fontFamily: "'Georgia', serif" }}>
             Fistiq
           </span>
@@ -35,17 +35,17 @@ const ResetPassword = () => {
         {!done ? (
           <>
             <h1
-              className="text-3xl font-semibold text-zinc-900 mb-1"
+              className="text-3xl font-semibold text-white mb-1"
               style={{ fontFamily: "'Georgia', serif" }}>
               New password
             </h1>
-            <p className="text-sm text-zinc-400 mb-8">
+            <p className="text-sm text-zinc-500 mb-8">
               Choose a strong password.
             </p>
 
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
-                <label className="block text-xs font-medium text-zinc-500 mb-1.5 uppercase tracking-widest">
+                <label className="block text-xs font-medium text-zinc-600 mb-1.5 uppercase tracking-widest">
                   New password
                 </label>
                 <input
@@ -53,12 +53,12 @@ const ResetPassword = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Min. 8 characters"
-                  className="w-full bg-white border border-zinc-200 rounded-lg px-4 py-3 text-sm text-zinc-900 placeholder-zinc-300 outline-none focus:border-zinc-400 transition-colors"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-zinc-200 placeholder-zinc-700 outline-none focus:border-white/25 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-zinc-500 mb-1.5 uppercase tracking-widest">
+                <label className="block text-xs font-medium text-zinc-600 mb-1.5 uppercase tracking-widest">
                   Confirm password
                 </label>
                 <input
@@ -66,10 +66,10 @@ const ResetPassword = () => {
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}
                   placeholder="••••••••"
-                  className={`w-full bg-white border rounded-lg px-4 py-3 text-sm text-zinc-900 placeholder-zinc-300 outline-none transition-colors ${
+                  className={`w-full bg-white/5 border rounded-lg px-4 py-3 text-sm text-zinc-200 placeholder-zinc-700 outline-none transition-colors ${
                     confirm && password !== confirm
-                      ? "border-red-300 focus:border-red-400"
-                      : "border-zinc-200 focus:border-zinc-400"
+                      ? "border-red-500/50 focus:border-red-500"
+                      : "border-white/10 focus:border-white/25"
                   }`}
                 />
                 {confirm && password !== confirm && (
@@ -84,8 +84,8 @@ const ResetPassword = () => {
                 disabled={!valid}
                 className={`w-full rounded-lg py-3 text-sm font-medium transition-colors cursor-pointer ${
                   valid
-                    ? "bg-zinc-900 text-white hover:bg-zinc-700"
-                    : "bg-zinc-200 text-zinc-400 cursor-not-allowed"
+                    ? "bg-red-500 text-white hover:bg-red-400"
+                    : "bg-white/5 text-zinc-600 cursor-not-allowed"
                 }`}>
                 Reset password
               </button>
@@ -93,9 +93,9 @@ const ResetPassword = () => {
           </>
         ) : (
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white border border-zinc-100 mb-6">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-green-500/15 border border-green-500/20 mb-6">
               <svg
-                className="w-6 h-6 text-zinc-400"
+                className="w-6 h-6 text-green-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -108,16 +108,16 @@ const ResetPassword = () => {
               </svg>
             </div>
             <h1
-              className="text-2xl font-semibold text-zinc-900 mb-2"
+              className="text-2xl font-semibold text-white mb-2"
               style={{ fontFamily: "'Georgia', serif" }}>
               All set
             </h1>
-            <p className="text-sm text-zinc-400 mb-8">
+            <p className="text-sm text-zinc-500 mb-8">
               Your password has been reset.
             </p>
             <Link
               href="/login"
-              className="inline-block w-full bg-zinc-900 text-white rounded-lg py-3 text-sm font-medium hover:bg-zinc-700 transition-colors text-center">
+              className="inline-block w-full bg-red-500 hover:bg-red-400 text-white rounded-lg py-3 text-sm font-medium transition-colors text-center">
               Back to sign in
             </Link>
           </div>

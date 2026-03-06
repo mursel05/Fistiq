@@ -38,18 +38,22 @@ const errorLink = new ErrorLink(({ error, operation, forward }) => {
   if (CombinedGraphQLErrors.is(error)) {
     for (let err of error.errors) {
       switch (err.extensions?.code) {
+        // check if url is not /login
         case "UNAUTHENTICATED": {
-          if (!isRefreshing) {
-            isRefreshing = true;
-            return new Observable((observer) => {
-              refreshTokenRequest()
-                .then(() => {
-                  forward(operation).subscribe(observer);
-                })
-                .catch(() => {
-                  window.location.href = "/login";
-                });
-            });
+            console.log(window.location.pathname);
+          if (!window.location.pathname.includes("/login")) {
+            if (!isRefreshing) {
+              isRefreshing = true;
+              return new Observable((observer) => {
+                refreshTokenRequest()
+                  .then(() => {
+                    forward(operation).subscribe(observer);
+                  })
+                  .catch(() => {
+                    window.location.href = "/login";
+                  });
+              });
+            }
           }
         }
       }

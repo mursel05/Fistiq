@@ -16,17 +16,30 @@ import {
   VerifyCodeMutation,
 } from "@/graphql/type";
 import { GET_PROFILE } from "@/graphql/user/queries";
+import { client } from "@/utils/apollo";
 import { useMutation } from "@apollo/client/react";
 
 export function useRegister() {
-  const [register, { loading, error }] =
-    useMutation<RegisterMutation>(REGISTER);
+  const [register, { loading, error }] = useMutation<RegisterMutation>(
+    REGISTER,
+    {
+      onCompleted() {
+        client.refetchQueries({
+          include: [GET_PROFILE],
+        });
+      },
+    },
+  );
   return { register, loading, error };
 }
 
 export function useLogin() {
   const [login, { loading, error }] = useMutation<LoginMutation>(LOGIN, {
-    refetchQueries: [{ query: GET_PROFILE }],
+    onCompleted() {
+      client.refetchQueries({
+        include: [GET_PROFILE],
+      });
+    },
   });
   return { login, loading, error };
 }

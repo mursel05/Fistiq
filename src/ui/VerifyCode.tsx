@@ -45,7 +45,7 @@ const VerifyCode = () => {
   const isComplete = code.every((d) => d !== "");
 
   return (
-    <main className="min-h-screen bg-[#F7F6F3] flex items-center justify-center px-4">
+    <main className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="mb-10 flex items-center gap-2">
           <Image
@@ -55,18 +55,18 @@ const VerifyCode = () => {
             height={48}
           />
           <span
-            className="text-2xl font-semibold tracking-tight text-zinc-900"
+            className="text-2xl font-semibold tracking-tight text-white"
             style={{ fontFamily: "'Georgia', serif" }}>
             Fistiq
           </span>
         </div>
 
         <h1
-          className="text-3xl font-semibold text-zinc-900 mb-1"
+          className="text-3xl font-semibold text-white mb-1"
           style={{ fontFamily: "'Georgia', serif" }}>
           Verify code
         </h1>
-        <p className="text-sm text-zinc-400 mb-8">
+        <p className="text-sm text-zinc-500 mb-8">
           Enter the 6-digit code we sent to your email.
         </p>
 
@@ -83,7 +83,7 @@ const VerifyCode = () => {
               value={digit}
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
-              className="w-full aspect-square bg-white border border-zinc-200 rounded-lg text-center text-lg font-medium text-zinc-900 outline-none focus:border-zinc-400 transition-colors"
+              className="w-full aspect-square bg-white/5 border border-white/10 rounded-lg text-center text-lg font-medium text-zinc-200 outline-none focus:border-white/25 transition-colors"
             />
           ))}
         </div>
@@ -93,23 +93,23 @@ const VerifyCode = () => {
           disabled={!isComplete || loading}
           className={`flex justify-center w-full cursor-pointer text-center rounded-lg py-3 text-sm font-medium transition-colors ${
             isComplete
-              ? "bg-zinc-900 text-white hover:bg-zinc-700"
-              : "bg-zinc-200 text-zinc-400 cursor-not-allowed pointer-events-none"
+              ? "bg-red-500 text-white hover:bg-red-400"
+              : "bg-white/5 text-zinc-600 cursor-not-allowed pointer-events-none"
           }`}>
           {loading ? <Spinner /> : "Verify"}
         </button>
 
-        <p className="text-center text-xs text-zinc-400 mt-6 flex items-center justify-center gap-1">
+        <p className="text-center text-xs text-zinc-600 mt-6 flex items-center justify-center gap-1">
           Didn&apos;t receive it?
-          <button className="text-zinc-700 font-medium hover:text-zinc-900 transition-colors cursor-pointer">
+          <button className="text-zinc-400 font-medium hover:text-zinc-200 transition-colors cursor-pointer">
             Resend code
           </button>
         </p>
 
-        <p className="text-center text-xs text-zinc-400 mt-3">
+        <p className="text-center text-xs text-zinc-600 mt-3">
           <Link
             href="/login"
-            className="text-zinc-700 font-medium hover:text-zinc-900 transition-colors">
+            className="text-zinc-400 font-medium hover:text-zinc-200 transition-colors">
             ← Back to sign in
           </Link>
         </p>
